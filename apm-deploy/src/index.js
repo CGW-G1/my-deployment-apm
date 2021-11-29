@@ -7,6 +7,7 @@ import MainScreen from './component/MainScreen';
 
 ReactDOM.render(
   <React.StrictMode>
+    <App />
     <MainScreen />
   </React.StrictMode>,
   document.getElementById('root')
