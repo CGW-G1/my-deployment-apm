@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import MainScreen from './component/MainScreen';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MainScreen />
   </React.StrictMode>,
   document.getElementById('root')
 );
