@@ -1,14 +1,14 @@
 const env = process.env.REACT_APP_ENV;
 
 let config = {
-    baseURL: "testing 123"
+    baseURL: "http://localhost:3000/"
 }
 
 if (env) {
 
     switch (env.toUpperCase()) {
         case "STAGE":
-            config.baseURL = "https://stage.localhost/hellothisisAuntt"
+            config.baseURL = "https://stage.localhost/"
             break;
         case "PRODUCTION": {
             config.baseURL = "https://localhost.com"
