@@ -1,5 +1,6 @@
 import React from "react";
 import API from "../API";
+import '../index.css';
 
 class CovidStats extends React.Component {
     constructor() {
@@ -13,7 +14,7 @@ class CovidStats extends React.Component {
     }
 
     componentDidMount() {
-        console.log("This is my first render");
+        console.log("^This above is my first render");
         this.fetchStats();
     }
 
@@ -40,66 +41,78 @@ class CovidStats extends React.Component {
     }
 
     render() {
-        const { stats } = this.state;
-        const xyz = Object.values(stats);
-        const xycArr = Object.values(xyz);
-
+        const { stats } = this.state; //cases
         const { deaths } = this.state;
-        const abc = Object.values(deaths);
-        const abcArr = Object.values(abc);
 
-        console.log("In obj: ", stats);
-        console.log("In array cases: ", xycArr);
-        console.log("In array deaths: ", abcArr);
+        console.log("In cases: ", stats);
+        console.log("In deaths: ", deaths);
+
 
 
         return (
             <>
-                <div style={{ textAlign: "center" }}>
+                <div className='header'>
                     <h2>
                         <u> Singapore COVID-19 Cases Update : {this.state.date}</u>
                     </h2>
                 </div>
 
-                <div className="container" style={{ padding: "25px 50px", textAlign: "center" }}>
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '0% 20%' }}>
-                        <div>
+
+                <div className="container">
+
+
+
+
+                    <div className="container e0">
+                        <div className="titles">
                             New cases today:
-                            <p style={{ color: "green", fontWeight: "bold", fontSize: "30px" }}>
-                                {xyz[0]}
+                            <p id="testID" >
+                                {stats.new}
                             </p>
                         </div>
-                        <hr />
-                        <div>
+                        <hr style={{ border: " solid 1px #56A4A8" }} />
+                        <div style={{ color: "#d9ac9b" }}>
                             New deaths today:
-                            <p style={{ color: "red", fontWeight: "bold", fontSize: "30px" }}>
-                                {abc[0]}
+                            <p style={{ color: "#712320", fontWeight: "bold", fontSize: "30px" }}>
+                                {deaths.new}
                             </p>
                         </div>
                     </div>
 
-                    <div>
+
+
+
+                    <div style={{ color: "#d9ac9b" }}>
                         Current number of active cases:
-                        <p style={{ color: "purple", fontWeight: "bold", fontSize: "22px" }}>
-                            {xyz[1]}
+                        <p style={{ color: "#D9AC9B", fontWeight: "bold", fontSize: "25px" }}>
+                            {stats.active}
                         </p>
                     </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '0% 20%' }}>
-                        <div>
+
+
+
+
+                    <div style={{ display: 'flex', justifyContent: 'center', padding: '0% 30%' }}>
+                        <div style={{ color: "#d9ac9b" }}>
                             Total cases to date:
-                            <p style={{ color: "purple", fontWeight: "bold", fontSize: "22px" }}>
-                                {xyz[5]}
+                            <p style={{ color: "#F5C492", fontWeight: "bold", fontSize: "25px" }}>
+                                {stats.total}
                             </p>
                         </div>
-                        <hr />
-                        <div>
+                        <hr style={{ border: " solid 1px #56A4A8" }} />
+                        <div style={{ color: "#d9ac9b" }}>
                             Total deaths to date:
-                            <p style={{ color: "black", fontWeight: "bold", fontSize: "22px" }}>
-                                {abc[2]}
+                            <p style={{ color: "#F5C492", fontWeight: "bold", fontSize: "25px" }}>
+                                {deaths.total}
                             </p>
                         </div>
                     </div>
+
+
+
+
+
                 </div>
             </>
         );
