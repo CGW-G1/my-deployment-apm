@@ -1,9 +1,126 @@
 import React from "react";
 import API from "../API";
 import '../index.css';
-import ScriptTag from 'react-script-tag';
-import { getLyrics, getSong } from 'genius-lyrics-api';
+//external library
+const reactStringReplace = require('react-string-replace');
 
+class OvhLyric extends React.Component {
+    constructor() {
+        super();
+        this.fetchOvhData = this.fetchOvhData.bind(this);
+
+        this.state = {
+            lyrics: [],
+            lyricsAltFormat: [],
+            // test: [],
+        };
+    }
+
+    componentDidMount() {
+        console.log("^This above is my first render");
+        this.fetchOvhData();
+    }
+
+
+    async fetchOvhData() {
+        const response = await API.get("/the weeknd/save your tears");
+        let lyrics = [];
+        let lyricsAltFormat = [];
+        if (response.status === 200) {
+            lyrics = response.data; //this can be response.data.lyrics then line 60 will be cleaner
+            lyricsAltFormat = response.request.response;
+        }
+
+        console.log("Full API data: ", response);
+        console.log("Lyric Object from API: ", lyrics); //this console logs lyrics object
+        console.log("lyrics alternate format: ", lyricsAltFormat); //this console logs /n version
+
+        /* This replacing method works but the wont reflect as html tag. Prints out <br/> as it is*/
+        // let test = lyricsAltFormat.replace(/\n/g, '<br>');
+        // console.log("lyrics  format: ", test);
+
+        this.setState({
+            ...this.state,
+            lyrics,
+            lyricsAltFormat,
+            // test,
+        });
+    }
+
+
+    render() {
+
+        const { lyrics } = this.state;
+        // const { test } = this.state;
+        console.log('Hello printing lyric: ', lyrics.lyrics); //this console logs formatted version but format disappears when rendered to HTML
+
+
+        const content = lyrics.lyrics;
+        let formatText;
+
+        formatText = reactStringReplace(content, '\n', (match, i) => ( //replace \n
+            <div className="spacer"><br /></div>                       // with <br />
+        ));
+
+        formatText = reactStringReplace(formatText, 'Paroles de la chanson', (match, i) => (
+            <div></div>
+        ));
+
+        //this replaces 'par' from title, i.e Save Your Tears par The Weeknd
+        //but this also replaces every other instance of 'par'. i.e Apart -> A by t
+        formatText = reactStringReplace(formatText, 'par', (match, i) => (
+            <i> by </i>
+        ));
+
+        return (
+
+            <>
+                <blockquote style={{ textAlign: 'center' }}>
+                    {formatText}
+                </blockquote>
+
+            </>
+        );
+    }
+}
+
+export default OvhLyric;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Ignore----------------------------------------- */
+
+
+// import ScriptTag from 'react-script-tag';
+// import { getLyrics, getSong } from 'genius-lyrics-api';
+// import Genius from 'genius-lyrics';
+//class OvhLyric extends React.Component {
+    //     constructor() {
+    //         super();
+    //         // this.fetchStats = this.fetchStats.bind(this);
+    //         this.fetchOvhData = this.fetchOvhData.bind(this);
+    //         // this.checkerSpeller = this.checkerSpeller.bind(this);
+
+    //         this.state = {
+    //             lyrics: [],
+    //             lyricsAltFormat: [],
+    //             test: [],
+    //             // stats: [],
+    //             // deaths: [],
+    //             // date: new Date().toDateString()
+    //         };
+    //     }
 
 // getSong(options).then((song) =>
 //     console.log(`
@@ -50,54 +167,7 @@ import { getLyrics, getSong } from 'genius-lyrics-api';
 //     optimizeQuery: true
 // };
 // getLyrics(options).then((lyrics) => console.log("this is the chunk: ", lyrics));
-
-class CovidStats extends React.Component {
-    constructor() {
-        super();
-        // this.fetchStats = this.fetchStats.bind(this);
-        this.fetchOvhData = this.fetchOvhData.bind(this);
-        // this.checkerSpeller = this.checkerSpeller.bind(this);
-
-        this.state = {
-            lyrics: [],
-            lyricsAltFormat: [],
-            // stats: [],
-            // deaths: [],
-            // date: new Date().toDateString()
-        };
-    }
-
-    componentDidMount() {
-        console.log("^This above is my first render");
-        // this.fetchStats();
-        this.fetchOvhData();
-        // this.checkerSpeller();
-    }
-
-    // async checkerSpeller() {
-    //     const spell = await API.get('/check');
-    //     console.log("Check Spell: ", spell);
-    // }
-
-    async fetchOvhData() {
-        const response = await API.get("/The Weeknd/Save Your Tears");
-        let lyrics = [];
-        let lyricsAltFormat = [];
-        if (response.status === 200) {
-            lyrics = response.data;
-            lyricsAltFormat = response.request.response; //need to find a way to replace \n with </br> 
-
-        }
-        console.log("Full API data: ", response);
-        console.log("is this the lyrics: ", lyrics);
-        console.log("lyrics alternate format: ", lyricsAltFormat);
-        this.setState({
-            ...this.state,
-            lyrics,
-            lyricsAltFormat,
-        });
-
-    }
+/* note: this API prints a watermark(?) "paroles de la chanson */
 
     // async fetchStats() {
     //     const response = await API.get("/statistics?country=singapore");
@@ -123,81 +193,55 @@ class CovidStats extends React.Component {
     //     });
     // }
 
-
-    render() {
-        // const { stats } = this.state; //cases
+// const { stats } = this.state; //cases
         // const { deaths } = this.state;
         // console.log("In cases: ", stats);
         // console.log("In deaths: ", deaths);
-        const { lyrics } = this.state;
-        console.log('Hello printing lyric: ', lyrics.lyrics);
 
-        return (
-
-            <>
-
-                <blockquote> <h3>{lyrics.lyrics}</h3></blockquote>
-                {/* note: this API prints a watermark(?) "paroles de la chanson */}
-
-
-
-                {/* <div className='header'>
-                    <h2>
-                        <u> Singapore COVID-19 Cases Update : {this.state.date}</u>
-                    </h2>
-                </div>
-                <div className="container">
-                    <div className="container e0">
-                        <div className="titles">
-                            New cases today:
-                            <p id="testID" >
-                                {stats.new}
-                            </p>
-                        </div>
-                        <hr style={{ border: " solid 1px #56A4A8" }} />
-                        <div style={{ color: "#d9ac9b" }}>
-                            New deaths today:
-                            <p style={{ color: "#712320", fontWeight: "bold", fontSize: "30px" }}>
-                                {deaths.new}
-                            </p>
-                        </div>
-                    </div>
-                    <div style={{ color: "#d9ac9b" }}>
-                        Current number of active cases:
-                        <p style={{ color: "#D9AC9B", fontWeight: "bold", fontSize: "25px" }}>
-                            {stats.active}
-                        </p>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '0% 30%' }}>
-                        <div style={{ color: "#d9ac9b" }}>
-                            Total cases to date:
-                            <p style={{ color: "#F5C492", fontWeight: "bold", fontSize: "25px" }}>
-                                {stats.total}
-                            </p>
-                        </div>
-                        <hr style={{ border: " solid 1px #56A4A8" }} />
-                        <div style={{ color: "#d9ac9b" }}>
-                            Total deaths to date:
-                            <p style={{ color: "#F5C492", fontWeight: "bold", fontSize: "25px" }}>
-                                {deaths.total}
-                            </p>
-                        </div>
-                    </div>
+/* <div className='header'>
+    <h2>
+        <u> Singapore COVID-19 Cases Update : {this.state.date}</u>
+    </h2>
+</div>
+<div className="container">
+    <div className="container e0">
+        <div className="titles">
+            New cases today:
+            <p id="testID" >
+                {stats.new}
+            </p>
+        </div>
+        <hr style={{ border: " solid 1px #56A4A8" }} />
+        <div style={{ color: "#d9ac9b" }}>
+            New deaths today:
+            <p style={{ color: "#712320", fontWeight: "bold", fontSize: "30px" }}>
+                {deaths.new}
+            </p>
+        </div>
+    </div>
+    <div style={{ color: "#d9ac9b" }}>
+        Current number of active cases:
+        <p style={{ color: "#D9AC9B", fontWeight: "bold", fontSize: "25px" }}>
+            {stats.active}
+        </p>
+    </div>
+    <div style={{ display: 'flex', justifyContent: 'center', padding: '0% 30%' }}>
+        <div style={{ color: "#d9ac9b" }}>
+            Total cases to date:
+            <p style={{ color: "#F5C492", fontWeight: "bold", fontSize: "25px" }}>
+                {stats.total}
+            </p>
+        </div>
+        <hr style={{ border: " solid 1px #56A4A8" }} />
+        <div style={{ color: "#d9ac9b" }}>
+            Total deaths to date:
+            <p style={{ color: "#F5C492", fontWeight: "bold", fontSize: "25px" }}>
+                {deaths.total}
+            </p>
+        </div>
+    </div>
 
 
 
 
-                </div> */}
-
-
-
-            </>
-        );
-    }
-}
-
-
-
-
-
-export default CovidStats;
+</div> */

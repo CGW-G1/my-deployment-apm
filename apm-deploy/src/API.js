@@ -1,8 +1,20 @@
 import axios from 'axios';
 
+const API = axios.create({
+    baseURL: "https://api.lyrics.ovh/v1/",
+});
+
+
+export default API;
 
 
 
+
+
+
+
+
+/* Ignore----------------------------------------- */
 
 // const API = axios.create({
 //     baseURL: "https://covid-193.p.rapidapi.com",
@@ -13,14 +25,6 @@ import axios from 'axios';
 
 // });
 
-const API = axios.create({
-    baseURL: "https://api.lyrics.ovh/v1/",
-    // headers: {
-    //     'x-rapidapi-host': 'covid-193.p.rapidapi.com',
-    //     'x-rapidapi-key': '66f75eb6ebmshb919ecdbb43a32ep1f9ed5jsnd03f0d01f882'
-    // }
-
-});
 // const API = axios.create({
 //     baseURL: 'https://montanaflynn-spellcheck.p.rapidapi.com/',
 //     params: { text: 'This sentnce has some probblems.' },
@@ -53,6 +57,3 @@ const API = axios.create({
 // ).then(function (result) {
 //     const appKey = result.data.key
 // })
-
-export default API;
-
