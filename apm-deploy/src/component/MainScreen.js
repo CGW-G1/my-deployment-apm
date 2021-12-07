@@ -20,10 +20,10 @@ class OvhLyric extends React.Component {
     componentDidMount() {
         console.log("^This above is my first render");
         this.fetchOvhData();
-    }
-
+    }    
 
     async fetchOvhData() {
+        // const response = await API.get("/miss a/bad girl good girl");
         const response = await API.get("/Meghan Trainor/Like I'm Gonna Lose You");
         // const response = await API.get("/the weeknd/save your tears");
         let lyrics = [];
@@ -87,7 +87,7 @@ class OvhLyric extends React.Component {
                 </blockquote>
 
                 <div className='displayWindow2'>
-                <Testing sendOutput={submitContent} />
+                <Testing sendOutput={submitContent}/>
                 </div>
 
             </>

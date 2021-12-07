@@ -3,7 +3,7 @@ import API2 from '../API2';
 import langList from './lang';
 
 function Testing(props) {
-
+    
     let response2;
     let response3;
 
