@@ -4,11 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import MainScreen from './component/MainScreen';
+import Search from './component/Search';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
+    <Search />
     <MainScreen />
+
   </React.StrictMode>,
   document.getElementById('root')
 );
