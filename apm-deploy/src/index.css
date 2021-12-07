@@ -40,3 +40,16 @@ code {
 .titles {
   color: #d9ac9b;
 }
+
+
+.displayWindow2{
+  position: relative;  
+  margin: 1%;
+  display:flex;
+  background-color:rgb(235, 206, 235);
+  color: black;  
+  border: 1px solid purple;  
+  width: 600px;
+  height: auto;
+  align-items: flex-start;  
+}

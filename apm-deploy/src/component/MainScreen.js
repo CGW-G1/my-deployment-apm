@@ -1,6 +1,7 @@
 import React from "react";
 import API from "../API";
 import '../index.css';
+import Testing from './test';
 //external library
 const reactStringReplace = require('react-string-replace');
 
@@ -23,7 +24,8 @@ class OvhLyric extends React.Component {
 
 
     async fetchOvhData() {
-        const response = await API.get("/the weeknd/save your tears");
+        const response = await API.get("/Meghan Trainor/Like I'm Gonna Lose You");
+        // const response = await API.get("/the weeknd/save your tears");
         let lyrics = [];
         let lyricsAltFormat = [];
         if (response.status === 200) {
@@ -58,6 +60,11 @@ class OvhLyric extends React.Component {
         const content = lyrics.lyrics;
         let formatText;
 
+        let submitContent = lyrics.lyrics;
+                
+        // console.log('Hello submitting lyric: ', submitContent);
+        // console.log(typeof submitContent); // returns string....        
+
         formatText = reactStringReplace(content, '\n', (match, i) => ( //replace \n
             <div className="spacer"><br /></div>                       // with <br />
         ));
@@ -70,7 +77,7 @@ class OvhLyric extends React.Component {
         //but this also replaces every other instance of 'par'. i.e Apart -> A by t
         formatText = reactStringReplace(formatText, 'par', (match, i) => (
             <i> by </i>
-        ));
+        ));        
 
         return (
 
@@ -78,6 +85,10 @@ class OvhLyric extends React.Component {
                 <blockquote style={{ textAlign: 'center' }}>
                     {formatText}
                 </blockquote>
+
+                <div className='displayWindow2'>
+                <Testing sendOutput={submitContent} />
+                </div>
 
             </>
         );
