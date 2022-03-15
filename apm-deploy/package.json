@@ -1,6 +1,6 @@
 {
   "name": "apm-deploy",
-  "homepage": "https://auntpyonemaung.github.io/singapore-covid-stats/",
+  "homepage": "https://auntpyonemaung.github.io/my-deployment-apm/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
